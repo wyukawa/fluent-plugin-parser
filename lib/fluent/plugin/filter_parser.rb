@@ -37,7 +37,7 @@ class Fluent::ParserFilter < Fluent::Filter
     new_es = Fluent::MultiEventStream.new
     es.each do |time,record|
       raw_value = record[@key_name]
-      if raw_value.nil?
+      if raw_value.nil? || raw_value.empty?
         log.warn "#{@key_name} does not exist" unless @ignore_key_not_exist
         new_es.add(time, handle_parsed(tag, record, time, {})) if @reserve_data
         next
